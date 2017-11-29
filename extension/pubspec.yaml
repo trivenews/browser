@@ -1,0 +1,5 @@
+name: trive
+dependencies:
+  chrome: any
+transformers:
+  - chrome

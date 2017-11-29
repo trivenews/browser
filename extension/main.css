@@ -1,0 +1,10 @@
+#trive-panel {
+    width: 100px;
+    height: 100px;
+    background-color: whitesmoke;
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 2147483647;
+}

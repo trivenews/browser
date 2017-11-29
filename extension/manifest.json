@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "Trive",
+  "version": "0.1",
+
+  "description": "Trive researches Truth through crowd wisdom via blockchain based rewards and verification mechanisms.",
+  "icons": {
+    "16": "images/trive-16.png",
+    "24": "images/trive-24.png",
+    "32": "images/trive-32.png",
+    "48": "images/trive-48.png",
+    "64": "images/trive-64.png",
+    "128": "images/trive-128.png"
+  },
+
+  "author": "Trive LLC",
+  "homepage_url": "https://trive.news",
+
+  "offline_enabled": false,
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "css": ["main.css"],
+    "js": ["build/web/main.dart.js"]
+  }],
+  "browser_action": {
+    "default_icon": {
+      "16": "images/trive-16.png",
+      "24": "images/trive-24.png",
+      "32": "images/trive-32.png",
+      "48": "images/trive-48.png",
+      "64": "images/trive-64.png",
+      "128": "images/trive-128.png"
+    }
+  },
+
+  "permissions": [
+    "contextMenus",
+    "tabs"
+  ]
+
+}
