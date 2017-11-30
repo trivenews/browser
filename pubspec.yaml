@@ -1,1 +1,6 @@
 name: annotator
+dev_dependencies:
+  test:
+    git:
+      url: git://github.com/dart-lang/test.git
+      ref: master
