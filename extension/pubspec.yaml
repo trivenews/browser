@@ -1,5 +1,7 @@
 name: trive
 dependencies:
   chrome: any
+  annotator:
+    path: ../
 transformers:
   - chrome
