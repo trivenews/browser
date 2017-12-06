@@ -6,12 +6,12 @@ import 'package:annotator/annotator.dart';
 
 class API {
 
-    static final String api_url = "http://localhost:8000/api/";
+    static final String api_url = "http://localhost:8000/api";
     static final Map<String, String> headers = {
         "Content-Type": "application/json"
     };
 
-    static Future<bool> save(Model model) async {
+    static Future<Map> save(Model model) async {
         try {
             var response = await HttpRequest.request(
                     "${api_url}/${model.type}/",
@@ -19,9 +19,9 @@ class API {
                     requestHeaders: headers,
                     sendData: model.json
             );
-            return response.status == 200 ? true : false;
+            return JSON.decode(response.responseText);
         } catch(e) {
-            return false;
+            return {};
         }
     }
 
@@ -53,20 +53,22 @@ class Author extends Model {
 class Article extends Model {
     final type = 'article';
 
+    String id;
+
     String url;
     String title;
-    String image;
+    String image = "";
     String description;
+    String site_name;
     List<Author> authors;
-    String publisher;
 
     Map get map => {
         'url': url,
         'title': title,
         'image': image,
         'description': description,
-        'publisher': publisher,
-        'authors': authors.map((a)=>a.json)
+        'site_name': site_name,
+        //'authors': authors.map((a)=>a.json)
     };
 }
 
@@ -76,6 +78,7 @@ class Claim extends Model {
 
     Article article;
 
+    String id;
     String statement;
     String selector;
     int start, length;
@@ -133,24 +136,51 @@ class ClaimEditor {
 class TrivePanel {
 
     static final HTML = """
-        <button id='new-trive-claim'></button>
+        <button id='new-trive-claim'>Add Claim</button>
     """;
 
     DivElement e = new DivElement()..id="trive-panel";
 
+    Article article = new Article();
+
     TrivePanel() {
         e.setInnerHtml(HTML, treeSanitizer: NodeTreeSanitizer.trusted);
         document.body.insertBefore(e, document.body.firstChild);
-        e.querySelector('button').onClick.listen(sendSelection);
-        //addFromMeta('og:title');
-        //addFromMeta('og:description');
-        //addFromMeta('og:url');
+        e.querySelector('button').onClick.listen(addClaim);
+        fetchClaims();
     }
 
-    sendSelection([_]) {
-        window.console.log(getFromMeta('og:url')??'http://trive.news');
-        //window.console.log(getSelection());
+    fetchClaims() async {
+        article.url = getFromMeta('og:url');
+        article.title = getFromMeta('og:title');
+        article.site_name = getFromMeta('og:site_name');
+        article.description = getFromMeta('og:description');
+        var response = await API.save(article);
+        article.id = response['id'];
+        window.console.log(response);
+    }
+
+    addClaim([_]) {
+        window.console.log('addClaim');
         highlightCurrentSelection();
+        saveClaim();
+        window.console.log('done');
+    }
+
+    saveClaim() async {
+        window.console.log('saveClaim');
+        var sel = window.getSelection();
+        var range = sel.getRangeAt(0);
+        var claim = new Claim();
+        claim.article = article;
+        claim.statement = range.toString();
+        claim.selector = getCSSSelectorFromElement(range.startContainer);
+        claim.start = range.startOffset;
+        claim.length = claim.statement.length;
+        window.console.log(claim.json);
+        var response = await API.save(claim);
+        claim.id = response['id'];
+        window.console.log(response);
     }
 
     String getFromMeta(String prop) {
