@@ -1,6 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Trive",
+  "short_name": "Trive",
   "version": "0.1",
 
   "description": "Trive researches Truth through crowd wisdom via blockchain based rewards and verification mechanisms.",
@@ -13,7 +14,7 @@
     "128": "images/trive-128.png"
   },
 
-  "author": "Trive LLC",
+  "author": "Trive Corp",
   "homepage_url": "https://trive.news",
 
   "offline_enabled": false,
