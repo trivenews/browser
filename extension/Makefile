@@ -7,7 +7,6 @@ bundle:
 	cp -r build bundle/
 	cp -r images bundle/
 	cp background.js bundle/
-	cp main.css bundle/
 	cp manifest.json bundle/
 
 dev: bundle
