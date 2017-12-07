@@ -24,7 +24,7 @@
   },
   "content_scripts": [{
     "matches": ["*://*/*"],
-    "css": ["main.css"],
+    "css": ["build/web/main.css"],
     "js": ["build/web/main.dart.js"]
   }],
   "browser_action": {
