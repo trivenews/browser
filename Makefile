@@ -18,3 +18,7 @@ release: bundle
 	sed -i 's/"Trive (Local)"/"Trive"/' bundle/manifest.json
 	rm -f trive-release.zip
 	cd bundle && zip ../trive-release.zip -r *
+
+clean:
+	rm -rf bundle build
+	rm -f trive-*.zip

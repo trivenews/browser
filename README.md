@@ -1,1 +1,1 @@
-# Annotator & Chrome Extension
+# Chrome Extension for Trive

@@ -73,6 +73,19 @@ class Article extends Model {
 }
 
 
+class Bounty extends Model {
+    final type = 'bounty';
+
+    Article article;
+    num amount;
+
+    Map get map => {
+        'article': article.id,
+        'amount': amount,
+    };
+}
+
+
 class Claim extends Model {
     final type = 'claim';
 
@@ -136,8 +149,12 @@ class ClaimEditor {
 class TrivePanel {
 
     static final HTML = """
-        <button id='new-trive-claim'>Add Claim</button>
+        <button id='new-trive-claim'>Submit Bounty</button>
     """;
+
+    /*static final HTML = """
+        <button id='new-trive-claim'>Add Claim</button>
+    """;*/
 
     DivElement e = new DivElement()..id="trive-panel";
 
@@ -146,18 +163,26 @@ class TrivePanel {
     TrivePanel() {
         e.setInnerHtml(HTML, treeSanitizer: NodeTreeSanitizer.trusted);
         document.body.insertBefore(e, document.body.firstChild);
-        e.querySelector('button').onClick.listen(addClaim);
-        fetchClaims();
+        e.querySelector('button').onClick.listen(submitBounty);
+        postArticle();
     }
 
-    fetchClaims() async {
+    postArticle() async {
         article.url = getFromMeta('og:url');
         article.title = getFromMeta('og:title');
         article.site_name = getFromMeta('og:site_name');
         article.description = getFromMeta('og:description');
         var response = await API.save(article);
         article.id = response['id'];
-        window.console.log(response);
+    }
+
+    submitBounty([_]) async {
+        window.console.log('submitting bounty');
+        var bounty = new Bounty();
+        bounty.article = article;
+        bounty.amount = 10.00;
+        window.console.log(bounty.json);
+        await API.save(bounty);
     }
 
     addClaim([_]) {

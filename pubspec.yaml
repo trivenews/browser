@@ -1,6 +1,14 @@
-name: annotator
-dev_dependencies:
-  test:
-    git:
-      url: git://github.com/dart-lang/test.git
-      ref: master
+name: trive_browser
+dependencies:
+  chrome: any
+  sass_builder: any
+  trive_core:
+    path: ../trive-core
+transformers:
+  - chrome
+  - sass_builder
+  - $dart2js:
+      commandLineOptions: [--trust-type-annotations, --trust-primitives, --show-package-warnings, --dump-info]
+web:
+  compiler:
+    debug: dartdevc
