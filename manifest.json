@@ -17,13 +17,13 @@
 
   "offline_enabled": false,
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["build/web/background.dart.js"],
     "persistent": true
   },
   "content_scripts": [{
     "matches": ["*://*/*"],
-    "css": ["build/web/main.css"],
-    "js": ["build/web/main.dart.js"]
+    "css": ["build/web/content_script.css"],
+    "js": ["build/web/content_script.dart.js"]
   }],
   "browser_action": {
     "default_icon": {

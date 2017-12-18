@@ -1,0 +1,9 @@
+<div *ngIf="article != null">
+  <div><label>title: </label>{{article.meta.title}}</div>
+  <div *ngIf="article.state != null">
+    <div><label>total bounty: </label>{{article.state.bounty_total}}</div>
+    <div><label>your bounty: </label>{{article.state.bounty_user}}</div>
+  </div>
+  <input #bountyAmount />
+  <button (click)="addBounty(bountyAmount.value); bountyAmount.value=''">Submit Bounty</button>
+</div>

@@ -1,3 +1,8 @@
 bundle/
+build/
+.idea/
+.pub/
+.packages
+pubspec.lock
 trive-dev.zip
 trive-release.zip

@@ -1,14 +1,31 @@
-name: trive_browser
+name: trive_extension
+description: Trive browser extension.
+
 dependencies:
   chrome: any
-  sass_builder: any
   trive_core:
     path: ../trive-core
+  angular: 5.0.0-alpha+1
+  angular_components: 0.9.0-alpha+1
+  angular_forms: 1.0.1-alpha+1
+  sass_builder: ^1.0.0
+
+dev_dependencies:
+  test:
+    git:
+      url: git://github.com/dart-lang/test.git
+      ref: master
+
 transformers:
-  - chrome
   - sass_builder
-  - $dart2js:
-      commandLineOptions: [--trust-type-annotations, --trust-primitives, --show-package-warnings, --dump-info]
+  - angular:
+      entry_points:
+        #- web/content_script.dart
+        - web/development.dart
+  #- $dart2js:
+  #    csp: true
+  #    commandLineOptions: [--trust-type-annotations, --trust-primitives, --show-package-warnings, --dump-info]
+
 web:
   compiler:
     debug: dartdevc

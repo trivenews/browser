@@ -1,7 +1,7 @@
 import 'package:chrome/chrome_ext.dart' as chrome;
+import 'package:trive_extension/extension.dart';
 
-main() {
-    chrome.browserAction.onClicked.listen((tab) {
-        chrome.tabs.executeScript(null, {file: "content_script.js"});
-    });
-}
+main() =>
+    new TriveChromeExtension(chrome.runtime, new Session())
+        ..setupBrowser()
+        ..setupCookies();
